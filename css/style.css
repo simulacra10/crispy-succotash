@@ -1,0 +1,42 @@
+/* I use Atom for projects.
+  atom-minify package: https://github.com/armin-pfaeffle/atom-minify
+  Produces the style.min.css
+*/
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+#names-list {
+  margin: auto;
+  width: 50%;
+}
+
+#background {
+  background: #fff url("../img/cannabis.jpg") no-repeat bottom left;
+  background-size: 100% 100%;
+  width: 100%;
+  height: 100%;
+  height: auto !important;
+  min-height: 100%;
+}
+
+th {
+  color: yellow;
+}
+
+#banner {
+  display: block;
+  width: 100%;
+  min-height: 100px;
+}
+
+#info {
+  color: white;
+}
+
+footer {
+  text-align: center;
+}

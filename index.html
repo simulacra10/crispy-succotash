@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.13.4/dist/bootstrap-table.min.css">
+  <link rel="stylesheet" href="css/style.min.css">
+  <title>Your Landing Page Title</title>
+</head>
+
+<body id="background">
+  <div id="banner" class="container">
+    <!-- empty div for spaceing at the top. May be used later for a banner -->
+  </div>
+  <div id="names-list" class="container">
+
+    <table id="list" class="table table-sm table-hover" data-toggle="table" data-cache="false" data-height="299">
+      <thead>
+        <tr>
+          <th class="th-md bg-success text-light">URL's For Sale</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- table is generated dynamically -->
+      </tbody>
+    </table>
+    <div class="col-sm"> </div>
+    <p id="info" class="lead">The table above has domain names that are for sale. Pleae
+      <a href="mailto:addyouremail@here.com">contact us</a> if you would like to discuss the purchase or licensing of the domains below. </p>
+  </div>
+  <footer>
+    <div class="container">
+      <p>&copy; Your copyright here.</p>
+    </div>
+  </footer>
+  <!-- the script below reads a json file and then populates the table data automagically. -->
+  <script type="text/javascript">
+    /* looks for the #list id */
+    const listbody = document.querySelector("#list > tbody");
+    /* we are going to load the list into a new XMLHttpRequest and then open the json file */
+    function loadlist() {
+      const request = new XMLHttpRequest();
+      request.open("get", "data/names.json");
+      /* some error checking. If for some reason there's an issue loading the
+       json file, lets write an error message to
+       the console for troubleshooting
+       */
+      request.onload = () => {
+        try {
+          const json = JSON.parse(request.responseText);
+          poplist(json);
+        } catch (e) {
+          console.warn("Something funky happened. Could not load the json file.");
+        }
+      };
+      request.send();
+    }
+    /* as the name suggest, we populate the list here */
+    function poplist(json) {
+      //clear the table to make room for new data
+      while (listbody.firstChild) {
+        listbody.removeChild(listbody.firstChild);
+
+      }
+      // load some data into the Table
+      json.forEach((row) => {
+        /* create the <tr> element */
+        const tr = document.createElement("tr");
+        /* create the actual td element for the row
+           then append it to the table.
+        */
+        row.forEach((cell) => {
+          const td = document.createElement("td");
+          td.className = 'bg-primary text-light';
+          td.textContent = cell;
+          tr.appendChild(td);
+        });
+        listbody.appendChild(tr);
+      });
+
+    }
+    /* Redemption in Act 3! We actually send everything to the table to
+       load the list.
+    */
+    document.addEventListener("DOMContentLoaded", () => {
+      loadlist();
+    })
+  </script>
+
+  <!-- jQuery first, then Popper.js, then Bootstrap JS, and then Bootstrap Table JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.6.2/core.min.js"></script>
+  <script type="text/javascript" src="data/names.json"></script>
+</body>
+
+</html>
